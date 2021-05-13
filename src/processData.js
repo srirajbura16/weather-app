@@ -1,11 +1,18 @@
-export default async function processData(data) {
-  const city = data.name;
-  const countryCode = data.sys.country;
+export default function processData(data) {
+  const sky = data.weather[0].main;
+  const description = data.weather[0].description;
+  const temp = data.main.temp;
   const feelsLike = data.main.feels_like;
 
+  const city = data.name;
+  const country = data.sys.country;
+
   return {
-    city,
-    countryCode,
+    sky,
+    description,
+    temp,
     feelsLike,
+    city,
+    country,
   };
 }
