@@ -7,6 +7,8 @@ export default function processData(data) {
   const city = data.name;
   const country = data.sys.country;
 
+  const icon = data.weather[0].icon;
+
   return {
     sky,
     description,
@@ -14,5 +16,6 @@ export default function processData(data) {
     feelsLike,
     city,
     country,
+    icon,
   };
 }

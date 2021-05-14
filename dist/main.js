@@ -16,7 +16,17 @@
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ displayDOM)\n/* harmony export */ });\nfunction displayDOM(weather) {\n  console.log(weather);\n}\n\n\n//# sourceURL=webpack://weather-app/./src/displayDOM.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ displayDOM)\n/* harmony export */ });\nfunction displayDOM(weather) {\n  const root = document.querySelector('#root');\n  root.innerHTML = '';\n  console.log(weather);\n\n  //Location\n  const location = document.createElement('h1');\n  location.textContent = `${weather.city}, ${weather.country}`;\n\n  //Weather\n  const weatherContainer = document.createElement('div');\n\n  //weather main content\n  const main = document.createElement('div');\n  main.classList.add('main');\n\n  //weather icon\n  const weatherIcon = document.createElement('img');\n  weatherIcon.classList.add('icon');\n  weatherIcon.src = `http://openweathermap.org/img/wn/${weather.icon}@2x.png`;\n\n  const temp = document.createElement('span');\n  temp.classList.add('temp');\n  temp.textContent = weather.temp + '℃';\n\n  main.append(weatherIcon, temp);\n\n  //weather information\n  const info = document.createElement('p');\n  info.textContent = `Feels like ${weather.feelsLike}℃. ${weather.description}.`;\n\n  weatherContainer.append(main, info);\n  root.append(location, weatherContainer);\n}\n\n\n//# sourceURL=webpack://weather-app/./src/displayDOM.js?");
+
+/***/ }),
+
+/***/ "./src/fetchWeatherData.js":
+/*!*********************************!*\
+  !*** ./src/fetchWeatherData.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ fetchData)\n/* harmony export */ });\nasync function fetchData(city) {\n  const response = await fetch(\n    `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=1f965b90a13724999861d4a7c8433f55`,\n    { mode: 'cors' }\n  );\n  const data = await response.json();\n\n  return data;\n}\n\n\n//# sourceURL=webpack://weather-app/./src/fetchWeatherData.js?");
 
 /***/ }),
 
@@ -26,7 +36,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _weatherData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./weatherData */ \"./src/weatherData.js\");\n/* harmony import */ var _processData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./processData */ \"./src/processData.js\");\n/* harmony import */ var _displayDOM__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./displayDOM */ \"./src/displayDOM.js\");\n\n\n\ndocument.querySelector('form').addEventListener('submit', e => {\n  e.preventDefault();\n  const city = document.querySelector('.city-input').value;\n\n  showWeather(city);\n\n  e.target.reset();\n});\n\nasync function showWeather(city) {\n  const weatherData = await (0,_weatherData__WEBPACK_IMPORTED_MODULE_0__.default)(city);\n  const data = (0,_processData__WEBPACK_IMPORTED_MODULE_1__.default)(weatherData);\n  const displayData = (0,_displayDOM__WEBPACK_IMPORTED_MODULE_2__.default)(data);\n}\n\n\n//# sourceURL=webpack://weather-app/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _fetchWeatherData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./fetchWeatherData */ \"./src/fetchWeatherData.js\");\n/* harmony import */ var _processData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./processData */ \"./src/processData.js\");\n/* harmony import */ var _displayDOM__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./displayDOM */ \"./src/displayDOM.js\");\n\n\n\ndocument.querySelector('form').addEventListener('submit', e => {\n  e.preventDefault();\n  const city = document.querySelector('.city-input').value;\n\n  showWeather(city);\n\n  e.target.reset();\n});\n\nasync function showWeather(city) {\n  const data = await (0,_fetchWeatherData__WEBPACK_IMPORTED_MODULE_0__.default)(city);\n  const weatherData = (0,_processData__WEBPACK_IMPORTED_MODULE_1__.default)(data);\n  (0,_displayDOM__WEBPACK_IMPORTED_MODULE_2__.default)(weatherData);\n}\n\n\n//# sourceURL=webpack://weather-app/./src/index.js?");
 
 /***/ }),
 
@@ -36,17 +46,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _wea
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ processData)\n/* harmony export */ });\nfunction processData(data) {\n  const sky = data.weather[0].main;\n  const description = data.weather[0].description;\n  const temp = data.main.temp;\n  const feelsLike = data.main.feels_like;\n\n  const city = data.name;\n  const country = data.sys.country;\n\n  return {\n    sky,\n    description,\n    temp,\n    feelsLike,\n    city,\n    country,\n  };\n}\n\n\n//# sourceURL=webpack://weather-app/./src/processData.js?");
-
-/***/ }),
-
-/***/ "./src/weatherData.js":
-/*!****************************!*\
-  !*** ./src/weatherData.js ***!
-  \****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ getWeatherData)\n/* harmony export */ });\nasync function getWeatherData(city) {\n  const response = await fetch(\n    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=1f965b90a13724999861d4a7c8433f55`,\n    { mode: 'cors' }\n  );\n  const weatherData = await response.json();\n\n  return weatherData;\n}\n\n\n//# sourceURL=webpack://weather-app/./src/weatherData.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ processData)\n/* harmony export */ });\nfunction processData(data) {\n  const sky = data.weather[0].main;\n  const description = data.weather[0].description;\n  const temp = data.main.temp;\n  const feelsLike = data.main.feels_like;\n\n  const city = data.name;\n  const country = data.sys.country;\n\n  const icon = data.weather[0].icon;\n\n  return {\n    sky,\n    description,\n    temp,\n    feelsLike,\n    city,\n    country,\n    icon,\n  };\n}\n\n\n//# sourceURL=webpack://weather-app/./src/processData.js?");
 
 /***/ })
 

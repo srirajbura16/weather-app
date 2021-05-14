@@ -1,4 +1,4 @@
-import getWeatherData from './weatherData';
+import fetchData from './fetchWeatherData';
 import processData from './processData';
 import displayDOM from './displayDOM';
 document.querySelector('form').addEventListener('submit', e => {
@@ -11,7 +11,7 @@ document.querySelector('form').addEventListener('submit', e => {
 });
 
 async function showWeather(city) {
-  const weatherData = await getWeatherData(city);
-  const data = processData(weatherData);
-  const displayData = displayDOM(data);
+  const data = await fetchData(city);
+  const weatherData = processData(data);
+  displayDOM(weatherData);
 }
