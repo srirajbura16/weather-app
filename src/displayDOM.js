@@ -7,10 +7,7 @@ export default function displayDOM(weather) {
   const location = document.createElement('h1');
   location.textContent = `${weather.city}, ${weather.country}`;
 
-  //Weather
-  const weatherContainer = document.createElement('div');
-
-  //weather main content
+  //weather
   const main = document.createElement('div');
   main.classList.add('main');
 
@@ -27,8 +24,7 @@ export default function displayDOM(weather) {
 
   //weather information
   const info = document.createElement('p');
-  info.textContent = `Feels like ${weather.feelsLike}℃. ${weather.description}.`;
+  info.textContent = `feels like ${weather.feelsLike}℃. ${weather.description}.`;
 
-  weatherContainer.append(main, info);
-  root.append(location, weatherContainer);
+  root.append(location, main, info);
 }
