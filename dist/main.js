@@ -30,13 +30,23 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
+/***/ "./src/getCurrentCity.js":
+/*!*******************************!*\
+  !*** ./src/getCurrentCity.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ getCurrentCity)\n/* harmony export */ });\nasync function getCurrentCity(position) {\n  const latitude = position.coords.latitude;\n  const longitude = position.coords.longitude;\n  const GET_CITY = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}.42159&longitude=${longitude}.0837&localityLanguage=en\n  `;\n\n  const fetchCity = await fetch(GET_CITY, { mode: 'cors' });\n  let city = await fetchCity.json();\n\n  city = city.localityInfo.administrative[4].name;\n  return city;\n}\n\n\n//# sourceURL=webpack://weather-app/./src/getCurrentCity.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _fetchWeatherData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./fetchWeatherData */ \"./src/fetchWeatherData.js\");\n/* harmony import */ var _processData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./processData */ \"./src/processData.js\");\n/* harmony import */ var _displayDOM__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./displayDOM */ \"./src/displayDOM.js\");\n\n\n\ndocument.querySelector('form').addEventListener('submit', e => {\n  e.preventDefault();\n  const city = document.querySelector('.city-input').value;\n\n  showWeather(city);\n\n  e.target.reset();\n});\n\nasync function showWeather(city) {\n  const data = await (0,_fetchWeatherData__WEBPACK_IMPORTED_MODULE_0__.default)(city);\n  const weatherData = (0,_processData__WEBPACK_IMPORTED_MODULE_1__.default)(data);\n  (0,_displayDOM__WEBPACK_IMPORTED_MODULE_2__.default)(weatherData);\n}\n\n\n//# sourceURL=webpack://weather-app/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _displayDOM__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./displayDOM */ \"./src/displayDOM.js\");\n/* harmony import */ var _fetchWeatherData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./fetchWeatherData */ \"./src/fetchWeatherData.js\");\n/* harmony import */ var _getCurrentCity__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./getCurrentCity */ \"./src/getCurrentCity.js\");\n/* harmony import */ var _processData__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./processData */ \"./src/processData.js\");\n\n\n\n\n\ndocument.querySelector('form').addEventListener('submit', (e) => {\n  e.preventDefault();\n  const city = document.querySelector('.city-input').value;\n\n  showWeather(city);\n\n  e.target.reset();\n});\n\nasync function displayCurrentCity(position) {\n  const city = await (0,_getCurrentCity__WEBPACK_IMPORTED_MODULE_2__.default)(position);\n  showWeather(city);\n}\n\nwindow.onload = () => {\n  if (navigator.geolocation) {\n    navigator.geolocation.getCurrentPosition(displayCurrentCity);\n  }\n};\n\nasync function showWeather(city) {\n  const data = await (0,_fetchWeatherData__WEBPACK_IMPORTED_MODULE_1__.default)(city);\n  const weatherData = (0,_processData__WEBPACK_IMPORTED_MODULE_3__.default)(data);\n  (0,_displayDOM__WEBPACK_IMPORTED_MODULE_0__.default)(weatherData);\n}\n\nshowWeather('toronto');\n\n\n//# sourceURL=webpack://weather-app/./src/index.js?");
 
 /***/ }),
 
