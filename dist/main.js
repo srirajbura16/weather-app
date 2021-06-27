@@ -36,7 +36,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ getCurrentCity)\n/* harmony export */ });\nasync function getCurrentCity(position) {\n  const latitude = position.coords.latitude;\n  const longitude = position.coords.longitude;\n  const GET_CITY = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}.42159&longitude=${longitude}.0837&localityLanguage=en\n  `;\n\n  const fetchCity = await fetch(GET_CITY, { mode: 'cors' });\n  let city = await fetchCity.json();\n\n  city = city.localityInfo.administrative[4].name;\n  return city;\n}\n\n\n//# sourceURL=webpack://weather-app/./src/getCurrentCity.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ getCurrentCity)\n/* harmony export */ });\nasync function getCurrentCity(position) {\n  const latitude = position.coords.latitude;\n  const longitude = position.coords.longitude;\n  const API_URL = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}.42159&longitude=${longitude}.0837&localityLanguage=en\n  `;\n\n  const fetchCity = await fetch(API_URL, { mode: 'cors' });\n  const data = await fetchCity.json();\n\n  const city = data.localityInfo.administrative[4].name;\n  return city;\n}\n\n\n//# sourceURL=webpack://weather-app/./src/getCurrentCity.js?");
 
 /***/ }),
 
